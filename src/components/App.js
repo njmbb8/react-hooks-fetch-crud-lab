@@ -19,8 +19,29 @@ function App() {
     {
       method: "DELETE"
     })
-    setQuestionList(ret)
+    .then(setQuestionList(ret))
   }
+
+  function onUpdate(event){
+    const id = parseInt(event.target.id)
+    const correctIndex = event.target.value
+
+    const ret = questionList.map((question) => {
+      if(id === question.id){
+        question.correctIndex = correctIndex
+      }
+
+      return question
+    })
+
+    fetch(`http://localhost:4000/questions/${id}`,{
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ correctIndex: correctIndex})
+    })
+    .then(setQuestionList(ret))
+  }
+
   return (
     <main>
       <AdminNavBar onChangePage={setPage} />
@@ -31,6 +52,7 @@ function App() {
                           <QuestionList 
                           questionList={questionList}
                           onDelete = {onDelete}
+                          onUpdate = {onUpdate}
                           />}
     </main>
   );

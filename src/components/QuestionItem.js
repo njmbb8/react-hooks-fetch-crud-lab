@@ -1,6 +1,6 @@
 import React from "react";
 
-function QuestionItem({ question, onDelete }) {
+function QuestionItem({ question, onDelete, onUpdate }) {
   const { id, prompt, answers, correctIndex } = question;
 
   const options = answers.map((answer, index) => (
@@ -15,7 +15,7 @@ function QuestionItem({ question, onDelete }) {
       <h5>Prompt: {prompt}</h5>
       <label>
         Correct Answer:
-        <select defaultValue={correctIndex}>{options}</select>
+        <select id={id} defaultValue={correctIndex} onChange = {onUpdate}>{options}</select>
       </label>
       <button onClick = {()=>{onDelete(id)}}>Delete Question</button>
     </li>
