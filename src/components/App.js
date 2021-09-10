@@ -13,10 +13,25 @@ function App() {
     .then((ret) => setQuestionList(ret))
   }, [])
 
+  function onDelete(id){
+    const ret = questionList.filter((question) => id !== question.id);
+    fetch(`http://localhost:4000/questions/${id}`,
+    {
+      method: "DELETE"
+    })
+    setQuestionList(ret)
+  }
   return (
     <main>
       <AdminNavBar onChangePage={setPage} />
-      {page === "Form" ? <QuestionForm questionList = {questionList} setQuestionList = {setQuestionList}/> : <QuestionList questionList={questionList}/>}
+      {page === "Form" ? <QuestionForm 
+                            questionList = {questionList} 
+                            setQuestionList = {setQuestionList}/> 
+                            : 
+                          <QuestionList 
+                          questionList={questionList}
+                          onDelete = {onDelete}
+                          />}
     </main>
   );
 }

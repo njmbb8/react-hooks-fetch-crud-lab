@@ -30,19 +30,15 @@ function QuestionForm({questionList, setQuestionList}) {
       ],
       correctIndex: formData.correctIndex
     }
-
-    setQuestionList([...questionList, newQuestion])
-  }
-
-  useEffect(() => {
     fetch("http://localhost:4000/questions",{
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(questionList[questionList.length - 1])
+      body: JSON.stringify(newQuestion)
     })
     .then((ret) => ret.json())
-    .then((data)=>console.log(data))
-  }, [questionList])
+    .then((data)=>setQuestionList([...questionList, data]))
+    
+  }
 
   return (
     <section>
